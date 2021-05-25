@@ -1,16 +1,21 @@
+import 'package:login/app/modules/home/home_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import '../home/home_store.dart'; 
+import 'package:login/app/modules/home/home_page.dart';
+import 'package:login/app/shared/repositories/localstorage/local_storage_interface.dart';
+import 'package:login/app/shared/repositories/localstorage/local_storage_share.dart';
 
-import 'home_page.dart';
- 
-class HomeModule extends Module {
+class HomeModule extends ChildModule {
   @override
-  final List<Bind> binds = [
- Bind.lazySingleton((i) => HomeStore()),
- ];
+  List<Bind> get binds => [
+        Bind((i) {
+          return HomeController();
+        }),
+      ];
 
- @override
- final List<ModularRoute> routes = [
-   ChildRoute(Modular.initialRoute, child: (_, args) => HomePage()),
- ];
+  @override
+  List<Router> get routers => [
+        Router('/', child: (_, args) => HomePage()),
+      ];
+
+  static Inject get to => Inject.of();
 }
